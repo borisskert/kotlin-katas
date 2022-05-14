@@ -1,0 +1,27 @@
+---
+name: Maven CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: adopt
+          java-version: 8
+
+      - name: Build
+        run: mvn -B -DskipTests compile
+
+      - name: Run tests
+        run: mvn -B test
